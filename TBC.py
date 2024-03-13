@@ -1,18 +1,19 @@
-
 """
 tbcstart.py
 
 @author: michael.scott
 """
+import random
+
 class Character(object):
     
-    def __init__(self):
+    def __init__(self, name = "default name", hitPoints = 10, hitChance = 60, maxDamage = 3, armor = 2):
         super().__init__()
-        self.__name = "Default Name"
-        self.__hitPoints = 10
-        self.__armor = 2
-        self.__hitChance = 60
-        self.__maxDamage = 3
+        self.name = name
+        self.hitPoints = hitPoints
+        self.armor = armor
+        self.hitChance = hitChance
+        self.maxDamage = maxDamage
         
     @property
     def name(self):
@@ -28,6 +29,7 @@ class Character(object):
     
     @hitPoints.setter
     def hitPoints(self, value):
+        value = self.testInt(value, 0, 100, 0)
         self.__hitPoints = value
         
     @property
@@ -36,6 +38,7 @@ class Character(object):
     
     @armor.setter
     def armor(self, value):
+        value = self.testInt(value, 0, 100, 0)
         self.__armor = value
         
     @property
@@ -44,6 +47,7 @@ class Character(object):
     
     @hitChance.setter
     def hitChance(self, value):
+        value = self.testInt(value, 0, 100, 0)
         self.__hitChance = value
     
     @property
@@ -52,28 +56,29 @@ class Character(object):
     
     @maxDamage.setter
     def maxDamage(self, value):
+        value = self.testInt(value, 0, 100, 0)
         self.__maxDamage = value
         
     def testInt(self, value, min = 0, max = 100, default = 0):
-    """ takes in value 
+        """ takes in value 
         checks to see if it is an int between
         min and max.  If it is not a legal value
         set it to default """
 
-    out = default
-
-    if type(value) == int:
-        if value >= min:
-            if value <= max:
-                out = value 
+        out = default
+    
+        if type(value) == int:
+            if value >= min:
+                if value <= max:
+                    out = value 
+                else:
+                    print("Too large")
             else:
-                print("Too large")
+                print("Too small")
         else:
-            print("Too small")
-    else:
-        print("Must be an int")
-
-    return out
+            print("Must be an int")
+    
+        return out
 
     def printStats(self):
         print (f"""
@@ -82,17 +87,18 @@ class Character(object):
  hit chance: {self.hitChance}
  max damage: {self.maxDamage}
  armor: {self.armor}""")
-                
+     
+    def hit(self, monster):
+        hitRand = random.randint(0, 100)
+        dmgNum = random.randint(1, self.maxDamage)
+        if hitRand <= self.hitChance:
+            print(f"{self.name} hits {monster.name} for {dmgNum} points of damage, {monster.name}'s armor absorbs {monster.armor} points of damage")
             
 
 
-
-
-
-
-
 def main():
-      c = Character()
+      c = Character("jim", 20, 99)
+      m = Character()
       c.printStats()
     
     
@@ -102,8 +108,3 @@ def main():
 
 
 main()
-
-
-
-
-
