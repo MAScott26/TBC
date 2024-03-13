@@ -54,7 +54,27 @@ class Character(object):
     def maxDamage(self, value):
         self.__maxDamage = value
         
-    
+    def testInt(self, value, min = 0, max = 100, default = 0):
+    """ takes in value 
+        checks to see if it is an int between
+        min and max.  If it is not a legal value
+        set it to default """
+
+    out = default
+
+    if type(value) == int:
+        if value >= min:
+            if value <= max:
+                out = value 
+            else:
+                print("Too large")
+        else:
+            print("Too small")
+    else:
+        print("Must be an int")
+
+    return out
+
     def printStats(self):
         print (f"""
  {self.name}
